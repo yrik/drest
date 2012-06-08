@@ -1,4 +1,3 @@
-
 from setuptools import setup, find_packages
 import sys, os
 
@@ -20,6 +19,7 @@ setup(name='drest',
     test_suite='nose.collector',
     install_requires=[
         'httplib2',
+        'simplejson >= 2.1',
         ### Required to build documentation
         # "Sphinx >= 1.0",
         ### Required for testing
