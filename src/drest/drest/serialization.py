@@ -1,4 +1,3 @@
-
 from drest import interface, exc, meta
 
 def validate(obj):
@@ -82,10 +81,9 @@ class JsonSerializationHandler(SerializationHandler):
     
     """
     def __init__(self, **kw):
-        try:
-            import json # pragma: no cover
-        except ImportError as e: # pragma: no cover
-            import simplejson as json # pragma: no cover
+        
+        # Use simplejson to handle Decimal data
+        import simplejson as json # pragma: no cover
             
         self.backend = json
         super(JsonSerializationHandler, self).__init__(**kw)
@@ -96,12 +94,12 @@ class JsonSerializationHandler(SerializationHandler):
             if type(serialized_string) == bytes:
                 serialized_string = serialized_string.decode('utf-8')
         
-            return self.backend.loads(serialized_string)
+            return self.backend.loads(serialized_string, use_decimal=True)
         except ValueError as e:
             return dict(error=e.args[0])
 
     def serialize(self, dict_obj):
-        return self.backend.dumps(dict_obj)
+        return self.backend.dumps(dict_obj, use_decimal=True)
                 
     def get_headers(self):
         headers = {
