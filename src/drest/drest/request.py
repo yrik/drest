@@ -1,4 +1,3 @@
-
 import os
 import sys
 
@@ -379,7 +378,7 @@ class RequestHandler(meta.MetaMixin):
             print('DREST_DEBUG: method=%s url=%s params=%s headers=%s' % \
                    (method, url, params, headers))
 
-        if self._meta.serialize: 
+        if self._meta.serialize and method is not 'GET': 
             payload = self._serialize(params)
         else:
             payload = urlencode(params)
